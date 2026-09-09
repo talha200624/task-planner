@@ -1,7 +1,7 @@
 # 🚀 Modern Görev ve Plan Yöneticisi (Task & Plan Manager)
 
-# 🇹🇷 **Türkçe Dokümantasyon aşağıdadır.**
-# 🇬🇧 **English documentation is available below.**
+### 🇹🇷 **Türkçe Dokümantasyon aşağıdadır.**
+### 🇬🇧 **English documentation is available below.**
 
 --- 
 
