@@ -1,9 +1,17 @@
-# 🚀 Modern Görev ve Plan Yöneticisi
+# 🚀 Modern Görev ve Plan Yöneticisi (Task & Plan Manager)
 
-Kendi sunucumda çalışması için geliştirdiğim, PHP ve MySQL tabanlı, modern arayüzlü ve güvenli bir görev takip (To-Do) ve hızlı not alma (Notepad) web uygulamasıdır.
+🇹🇷 **Türkçe Dokümantasyon aşağıdadır.**
+🇬🇧 **English documentation is available below.**
+
+--- 
+
+## 🇹🇷 Türkçe
+
+Kendi sunucumda çalışması için geliştirdiğim, PHP ve MySQL tabanlı, modern arayüzlü ve **Telegram bildirim entegrasyonuna** sahip güvenli bir görev takip ve hızlı not alma web uygulamasıdır.
 
 ## ✨ Özellikler
 
+*   **Zamanlı Görevler & Telegram Botu:** Belirtilen saat geldiğinde arka planda çalışan Cron Job (Zamanlayıcı) sayesinde Telegram üzerinden anlık bildirim gönderir.
 *   **Modern ve Koyu Tema (Dark Mode):** Göz yormayan, 'Inter' fontuyla desteklenmiş UI/UX tasarımı.
 *   **Akıllı Not Defteri:** Kullanıcı yazmayı bıraktıktan 1 saniye sonra (Debounce yöntemiyle) verileri yormadan buluta otomatik kaydeder.
 *   **Dinamik Bildirim Sistemi (Toast):** Görev eklendiğinde, silindiğinde veya not kaydedildiğinde renkli anlık bildirimler sunar.
@@ -20,9 +28,19 @@ Kendi sunucumda çalışması için geliştirdiğim, PHP ve MySQL tabanlı, mode
 ## 📌 Kurulum
 
 1. Depoyu klonlayın.
-2. `api.php` ve `note_api.php` dosyalarındaki veritabanı bilgilerinizi kendi sunucunuza göre güncelleyin.
-3. Sunucunuzda `planlar` adında bir veritabanı oluşturup gerekli tabloları içe aktarın.
+2. `api.php`, `note_api.php`, `scheduled_api.php` ve `telegram_cron.php` dosyalarındaki Database ve Bot bilgilerinizi güncelleyin.
+3. Sunucunuzda `planlar` veritabanını oluşturup şu SQL komutlarını çalıştırın:
+   ```mysql
+CREATE DATABASE planlar CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE planlar;
+
+CREATE TABLE tasks (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255) NOT NULL, completed TINYINT(1) DEFAULT 0, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE notes (id INT PRIMARY KEY, content TEXT);
+INSERT INTO notes (id, content) VALUES (1, '');
+CREATE TABLE scheduled_tasks (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255) NOT NULL, scheduled_time DATETIME NOT NULL, is_sent TINYINT(1) DEFAULT 0, completed TINYINT(1) DEFAULT 0);
+
 4. `index.php` içindeki varsayılan giriş şifresini kendinize göre değiştirin.
+5. Telegram bildirimlerinin çalışması için sunucunuza şu Cron görevini ekleyin: * * * * * /usr/bin/php /var/www/html/telegram_cron.php
 
 
 
