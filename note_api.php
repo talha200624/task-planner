@@ -8,9 +8,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 header("Content-Type: application/json; charset=UTF-8");
 
 $host = 'localhost';
-$db   = 'planlar';
-$user = 'opc'; // Kendi kullanıcı adını yaz
-$pass = 'talha'; // Kendi şifreni yaz
+$db   = 'DATABASE-NAME';
+$user = 'DATABASE-USERNAME'; // Kendi kullanıcı adını yaz
+$pass = 'DATABASE-PASSWORD'; // Kendi şifreni yaz
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
