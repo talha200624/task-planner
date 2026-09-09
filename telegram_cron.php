@@ -1,11 +1,11 @@
 <?php
 $host = 'localhost';
 $db   = 'planlar';
-$user = 'opc'; // Kendi DB kullanıcı adını yaz
-$pass = 'talha'; // Kendi DB şifreni yaz
+$user = 'DATABASE-USERNAME'; // Kendi DB kullanıcı adını yaz
+$pass = 'DATABASE-PASSWORD'; // Kendi DB şifreni yaz
 
-$botToken = "8942586191:AAGINNqX0Q277EMFolMZrI-L5_plD7BpesM";
-$chatId = "6082301779";
+$botToken = "TELEGRAM-BOT-TOKEN";
+$chatId = "TELEGRAM-CHAT-ID";
 
 $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
 
