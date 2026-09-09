@@ -185,3 +185,110 @@ addBtn.addEventListener('click', addTask);
 taskInput.addEventListener('keypress', e => { if (e.key === 'Enter') addTask(); });
 
 fetchTasks();
+
+
+
+
+// --- ZAMANLI GÖREV İŞLEMLERİ ---
+const schedTaskInput = document.getElementById('schedTaskInput');
+const schedTaskTime = document.getElementById('schedTaskTime');
+const schedAddBtn = document.getElementById('schedAddBtn');
+const schedTaskList = document.getElementById('schedTaskList');
+
+let schedTasks = [];
+const schedApiUrl = 'scheduled_api.php';
+
+async function fetchSchedTasks() {
+    try {
+        const response = await fetch(schedApiUrl);
+        const data = await response.json();
+        schedTasks = data.map(task => ({
+            ...task,
+            completed: task.completed == 1
+        }));
+        renderSchedTasks();
+    } catch (error) { console.error('Hata:', error); }
+}
+
+async function addSchedTask() {
+    const text = schedTaskInput.value.trim();
+    const time = schedTaskTime.value;
+    if (text !== '' && time !== '') {
+        const mysqlTime = time.replace('T', ' ') + ':00'; // JS tarihini MySQL formatına çevir
+        try {
+            const response = await fetch(schedApiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: text, scheduled_time: mysqlTime })
+            });
+            const newTask = await response.json();
+            newTask.completed = false;
+            schedTasks.push(newTask);
+            schedTasks.sort((a, b) => new Date(a.scheduled_time) - new Date(b.scheduled_time));
+            
+            schedTaskInput.value = '';
+            schedTaskTime.value = '';
+            renderSchedTasks();
+            showToast('Zamanlı görev kuruldu!', 'success');
+        } catch (error) { console.error('Hata:', error); }
+    } else {
+        showToast('Lütfen görev ve saat seçin', 'danger');
+    }
+}
+
+async function toggleSchedTask(id) {
+    const task = schedTasks.find(t => t.id === id);
+    if(task) {
+        const newStatus = !task.completed;
+        try {
+            await fetch(schedApiUrl, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id, completed: newStatus })
+            });
+            task.completed = newStatus;
+            renderSchedTasks();
+            showToast(newStatus ? 'Görev tamamlandı' : 'Geri alındı', 'info');
+        } catch (error) { console.error('Hata:', error); }
+    }
+}
+
+async function deleteSchedTask(id) {
+    try {
+        await fetch(schedApiUrl, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: id })
+        });
+        schedTasks = schedTasks.filter(task => task.id !== id);
+        renderSchedTasks();
+        showToast('Zamanlı görev silindi', 'danger');
+    } catch (error) { console.error('Hata:', error); }
+}
+
+function formatDisplayTime(mysqlTime) {
+    const date = new Date(mysqlTime);
+    return date.toLocaleDateString('tr-TR') + ' ' + date.toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'});
+}
+
+function renderSchedTasks() {
+    schedTaskList.innerHTML = '';
+    schedTasks.forEach(task => {
+        const li = document.createElement('li');
+        li.className = `task-item ${task.completed ? 'completed' : ''}`;
+        li.innerHTML = `
+            <div class="task-content" onclick="toggleSchedTask(${task.id})">
+                <input type="checkbox" class="checkbox" ${task.completed ? 'checked' : ''} onclick="event.stopPropagation(); toggleSchedTask(${task.id})">
+                <span class="task-text">${task.text}</span>
+                <span class="time-badge"><i class="fas fa-bell"></i> ${formatDisplayTime(task.scheduled_time)}</span>
+            </div>
+            <button class="delete-btn" onclick="event.stopPropagation(); deleteSchedTask(${task.id})">
+                <i class="fas fa-trash"></i>
+            </button>
+        `;
+        schedTaskList.appendChild(li);
+    });
+}
+
+schedAddBtn.addEventListener('click', addSchedTask);
+fetchSchedTasks();

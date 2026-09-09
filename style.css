@@ -163,6 +163,23 @@ body {
     z-index: 1000;
 }
 
+/* --- ZAMANLI GÖREV TASARIMLARI --- */
+.panel-divider { border: 0; border-top: 1px solid var(--border); margin: 20px 0; }
+.scheduled-input-group { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+.scheduled-input-group input[type="text"] { flex: 2; min-width: 150px; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); background-color: rgba(15, 23, 42, 0.6); color: var(--text-main); font-size: 1rem; outline: none; }
+.scheduled-input-group input[type="datetime-local"] { flex: 1.5; padding: 14px; border-radius: 10px; border: 1px solid var(--border); background-color: rgba(15, 23, 42, 0.6); color: var(--text-main); font-size: 0.9rem; outline: none; color-scheme: dark; }
+.scheduled-input-group input:focus { border-color: var(--accent); }
+.sched-add-btn { background-color: var(--success); }
+.sched-add-btn:hover { background-color: #059669; }
+.time-badge { font-size: 0.75rem; background-color: rgba(59, 130, 246, 0.2); color: var(--accent); padding: 4px 8px; border-radius: 6px; margin-left: 10px; white-space: nowrap; }
+
+
+
+
+
+
+
+
 .toast.success { background-color: var(--success); }
 .toast.danger { background-color: var(--danger); }
 .toast.info { background-color: var(--accent); }

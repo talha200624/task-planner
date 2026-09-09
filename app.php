@@ -48,13 +48,18 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     <input type="text" id="taskInput" placeholder="Örn: Yeni projeyi incele...">
                     <button class="add-btn" id="addBtn">Ekle</button>
                 </div>
+                <ul class="task-list" id="taskList"></ul>
+                <div id="emptyState" class="empty-state" style="display: none;">Şimdilik görev yok.</div>
 
-                <ul class="task-list" id="taskList">
-                    <!-- Görevler buraya eklenecek -->
-                </ul>
-                <div id="emptyState" class="empty-state" style="display: none;">
-                    Şimdilik yapılacak bir şey yok. Yeni bir plan ekle!
+                <hr class="panel-divider">
+
+                <h2><i class="fas fa-clock"></i> Zamanlı Görevler (Telegram)</h2>
+                <div class="scheduled-input-group">
+                    <input type="text" id="schedTaskInput" placeholder="Örn: Saat 15:00'te toplantı...">
+                    <input type="datetime-local" id="schedTaskTime">
+                    <button class="add-btn sched-add-btn" id="schedAddBtn">Kur</button>
                 </div>
+                <ul class="task-list" id="schedTaskList"></ul>
             </div>
             
         </div>
@@ -64,7 +69,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         <i id="toastIcon" class="fas fa-check-circle"></i> <span id="toastText">Kaydedildi</span>
     </div>
     
-    <script src="script.js?v=4"></script>
+    <script src="script.js?v=5"></script>
 </body>
 </html>
 </body>
