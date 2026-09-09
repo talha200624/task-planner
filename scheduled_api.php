@@ -6,9 +6,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 header("Content-Type: application/json; charset=UTF-8");
 
 $host = 'localhost';
-$db   = 'planlar';
-$user = 'opc'; // Kendi DB kullanıcı adın
-$pass = 'talha'; // Kendi DB şifren
+$db   = 'DATABASE-NAME';
+$user = 'DATABASE-USERNAME'; // Kendi DB kullanıcı adın
+$pass = 'DATABASE-PASSWORD'; // Kendi DB şifren
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
