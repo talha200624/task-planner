@@ -46,14 +46,15 @@ Kendi sunucumda çalışması için geliştirdiğim, PHP ve MySQL tabanlı, mode
 ```
 
 
-
+## 🇬🇧 English
 
 # 🚀 Modern Task & Plan Manager
 
-A modern, secure, and self-hosted task management (To-Do) and quick notepad web application built with PHP and MySQL, designed to run smoothly on custom Linux servers.
+A modern, secure, and self-hosted task management (To-Do) and quick notepad web application built with PHP and MySQL, featuring **Telegram bot notifications**.
 
 ## ✨ Features
 
+*   **Scheduled Tasks & Telegram Bot:** Sends instant notifications via Telegram when a scheduled task's time arrives, powered by a backend Cron Job.
 *   **Modern Dark Mode UI:** Clean, distraction-free interface styled with the 'Inter' font and tailored for productivity.
 *   **Smart Cloud Notepad:** Automatically saves your notes to the database 1 second after you stop typing (using the Debounce technique) to protect against data loss.
 *   **Dynamic Toast Notifications:** Instant, color-coded visual feedback for every action (adding tasks, deleting items, or saving notes).
@@ -69,9 +70,22 @@ A modern, secure, and self-hosted task management (To-Do) and quick notepad web 
 
 ---
 
-## 📌 Installation
+## 📌 Installation & Database Setup
 
 1. Clone the repository.
-2. Update your database credentials in the `api.php` and `note_api.php` files to match your own server.
-3. Create a database named `planlar` on your server and import the required tables.
+2. Update your Database credentials and Telegram Bot Tokens in `api.php`, `note_api.php`, `scheduled_api.php`, and `telegram_cron.php`.
+3. Create a database named `planlar` and run the SQL commands.
+   ```mysql
+   CREATE DATABASE planlar CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   USE planlar;
+
+   CREATE TABLE tasks (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255) NOT NULL, completed TINYINT(1) DEFAULT 0, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+   CREATE TABLE notes (id INT PRIMARY KEY, content TEXT);
+   INSERT INTO notes (id, content) VALUES (1, '');
+   CREATE TABLE scheduled_tasks (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255) NOT NULL, scheduled_time DATETIME NOT NULL, is_sent TINYINT(1) DEFAULT 0, completed TINYINT(1) DEFAULT 0);
+  
 4. Change the default login password inside `index.php` to your own preference.
+5. To enable Telegram notifications, add the following cron job to your server:
+   ```
+   * * * * * /usr/bin/php /var/www/html/telegram_cron.php
+   ```
