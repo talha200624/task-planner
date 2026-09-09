@@ -10,8 +10,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 $error = '';
 
 // Giriş bilgileri
-$kullanici_adi_dogru = 'talha';
-$sifre_dogru = '145478145'; 
+$kullanici_adi_dogru = 'WEBSITE-USERNAME';
+$sifre_dogru = 'WEBSITE-PASSWORD'; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'] ?? '';
