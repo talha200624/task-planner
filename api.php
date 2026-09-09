@@ -10,9 +10,9 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // KENDİ VERİTABANI BİLGİLERİNİ BURAYA GİR
 $host = 'localhost';
-$db   = 'planlar';
-$user = 'opc';
-$pass = 'talha';
+$db   = 'DATABASE-NAME';
+$user = 'DATABASE-USERNAME';
+$pass = 'DATABASE-PASSWORD';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
