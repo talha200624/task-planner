@@ -40,8 +40,10 @@ Kendi sunucumda çalışması için geliştirdiğim, PHP ve MySQL tabanlı, mode
    CREATE TABLE scheduled_tasks (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255) NOT NULL, scheduled_time DATETIME NOT NULL, is_sent TINYINT(1) DEFAULT 0, completed TINYINT(1) DEFAULT 0);
 
 4. `index.php` içindeki varsayılan giriş şifresini kendinize göre değiştirin.
-5. Telegram bildirimlerinin çalışması için sunucunuza şu Cron görevini ekleyin: * * * * * /usr/bin/php /var/www/html/telegram_cron.php
-
+5. Telegram bildirimlerinin çalışması için sunucunuza şu Cron görevini ekleyin:
+ ```
+ * * * * * /usr/bin/php /var/www/html/telegram_cron.php
+```
 
 
 
