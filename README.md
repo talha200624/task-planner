@@ -31,13 +31,13 @@ Kendi sunucumda çalışması için geliştirdiğim, PHP ve MySQL tabanlı, mode
 2. `api.php`, `note_api.php`, `scheduled_api.php` ve `telegram_cron.php` dosyalarındaki Database ve Bot bilgilerinizi güncelleyin.
 3. Sunucunuzda `planlar` veritabanını oluşturup şu SQL komutlarını çalıştırın:
    ```mysql
-CREATE DATABASE planlar CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE planlar;
+   CREATE DATABASE planlar CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   USE planlar;
 
-CREATE TABLE tasks (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255) NOT NULL, completed TINYINT(1) DEFAULT 0, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
-CREATE TABLE notes (id INT PRIMARY KEY, content TEXT);
-INSERT INTO notes (id, content) VALUES (1, '');
-CREATE TABLE scheduled_tasks (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255) NOT NULL, scheduled_time DATETIME NOT NULL, is_sent TINYINT(1) DEFAULT 0, completed TINYINT(1) DEFAULT 0);
+   CREATE TABLE tasks (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255) NOT NULL, completed TINYINT(1) DEFAULT 0, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+   CREATE TABLE notes (id INT PRIMARY KEY, content TEXT);
+   INSERT INTO notes (id, content) VALUES (1, '');
+   CREATE TABLE scheduled_tasks (id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(255) NOT NULL, scheduled_time DATETIME NOT NULL, is_sent TINYINT(1) DEFAULT 0, completed TINYINT(1) DEFAULT 0);
 
 4. `index.php` içindeki varsayılan giriş şifresini kendinize göre değiştirin.
 5. Telegram bildirimlerinin çalışması için sunucunuza şu Cron görevini ekleyin: * * * * * /usr/bin/php /var/www/html/telegram_cron.php
