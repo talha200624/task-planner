@@ -1,5 +1,9 @@
 # 🚀 Modern Görev ve Plan Yöneticisi (Task & Plan Manager)
 
+## Website Photo 
+<img width="1910" height="945" alt="Screenshot 2026-09-10 180550" src="https://github.com/user-attachments/assets/62b42379-b23c-451f-a575-9d3e6b168cda" />
+
+
 ### 🇹🇷 **Türkçe Dokümantasyon aşağıdadır.**
 ### 🇬🇧 **English documentation is available below.**
 
@@ -44,7 +48,6 @@ Kendi sunucumda çalışması için geliştirdiğim, PHP ve MySQL tabanlı, mode
  ```
  * * * * * /usr/bin/php /var/www/html/telegram_cron.php
 ```
-
 
 ## 🇬🇧 English
 
