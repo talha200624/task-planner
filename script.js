@@ -292,3 +292,70 @@ function renderSchedTasks() {
 
 schedAddBtn.addEventListener('click', addSchedTask);
 fetchSchedTasks();
+
+// --- HAVA DURUMU İŞLEMLERİ (Open-Meteo API) ---
+const cityInput = document.getElementById('cityInput');
+const getWeatherBtn = document.getElementById('getWeatherBtn');
+const weatherDisplay = document.getElementById('weatherDisplay');
+
+async function fetchWeather(city) {
+    weatherDisplay.innerHTML = '<div class="empty-state">Yükleniyor...</div>';
+    try {
+        // 1. Önce şehir adını koordinatlara (Enlem/Boylam) çevir
+        const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=tr&format=json`);
+        const geoData = await geoRes.json();
+        
+        if (!geoData.results || geoData.results.length === 0) {
+            weatherDisplay.innerHTML = '<div class="empty-state" style="color: var(--danger);">Şehir bulunamadı!</div>';
+            return;
+        }
+
+        const lat = geoData.results[0].latitude;
+        const lon = geoData.results[0].longitude;
+        const cityName = geoData.results[0].name;
+
+        // 2. O koordinatlardaki anlık hava durumunu çek
+        const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+        const weatherData = await weatherRes.json();
+        
+        const temp = weatherData.current_weather.temperature;
+        const weatherCode = weatherData.current_weather.weathercode;
+        
+        // WMO Hava Kodlarına göre ikon ve açıklama belirle
+        let icon = 'fa-sun';
+        let desc = 'Açık';
+        
+        if (weatherCode >= 1 && weatherCode <= 3) { icon = 'fa-cloud-sun'; desc = 'Parçalı Bulutlu'; }
+        else if (weatherCode >= 45 && weatherCode <= 48) { icon = 'fa-smog'; desc = 'Sisli'; }
+        else if (weatherCode >= 51 && weatherCode <= 67) { icon = 'fa-cloud-rain'; desc = 'Yağmurlu'; }
+        else if (weatherCode >= 71 && weatherCode <= 77) { icon = 'fa-snowflake'; desc = 'Karlı'; }
+        else if (weatherCode >= 80 && weatherCode <= 82) { icon = 'fa-cloud-showers-heavy'; desc = 'Sağanak Yağışlı'; }
+        else if (weatherCode >= 95) { icon = 'fa-bolt'; desc = 'Fırtınalı'; }
+
+        // Ekrana yazdır
+        weatherDisplay.innerHTML = `
+            <div style="font-size: 1.2rem; font-weight: 500; color: var(--text-main);">${cityName}</div>
+            <div class="weather-temp"><i class="fas ${icon}"></i> ${temp}°C</div>
+            <div class="weather-desc">${desc}</div>
+        `;
+    } catch (error) {
+        console.error("Hava durumu hatası:", error);
+        weatherDisplay.innerHTML = '<div class="empty-state" style="color: var(--danger);">Bağlantı hatası!</div>';
+    }
+}
+
+// Butona tıklandığında veya Enter'a basıldığında çalıştır
+getWeatherBtn.addEventListener('click', () => {
+    if (cityInput.value.trim() !== '') fetchWeather(cityInput.value.trim());
+});
+
+cityInput.addEventListener('keypress', e => {
+    if (e.key === 'Enter' && cityInput.value.trim() !== '') {
+        fetchWeather(cityInput.value.trim());
+    }
+});
+
+// Sayfa ilk açıldığında input içindeki varsayılan şehri yükle
+if(cityInput.value.trim() !== '') {
+    fetchWeather(cityInput.value.trim());
+}

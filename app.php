@@ -35,10 +35,28 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         <!-- Ana İçerik: İki Kolon -->
         <div class="main-content">
             
-            <!-- Sol Kolon: Not Defteri -->
-            <div class="panel left-panel">
-                <h2><i class="fas fa-book-open"></i> Hızlı Notlar</h2>
-                <textarea id="notepad" placeholder="Aklındakileri buraya yaz... Sayfayı yenilesen bile silinmez."></textarea>
+            <!-- Sol Kolon: Hava Durumu ve Notlar -->
+            <div class="left-column">
+                
+                <!-- Üst Bölüm: Hava Durumu -->
+                <div class="panel weather-panel">
+                    <h2><i class="fas fa-cloud-sun"></i> Hava Durumu</h2>
+                    <div class="weather-input-group">
+                        <input type="text" id="cityInput" value="Edirne" placeholder="Şehir adı girin...">
+                        <button class="add-btn" id="getWeatherBtn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div id="weatherDisplay" class="weather-display">
+                        <!-- Hava durumu verisi JavaScript ile buraya gelecek -->
+                        <div class="empty-state">Hava durumu bekleniyor...</div>
+                    </div>
+                </div>
+
+                <!-- Alt Bölüm: Hızlı Notlar -->
+                <div class="panel notepad-panel">
+                    <h2><i class="fas fa-book-open"></i> Hızlı Notlar</h2>
+                    <textarea id="notepad" placeholder="Aklındakileri buraya yaz... Sayfayı yenilesen bile silinmez."></textarea>
+                </div>
+
             </div>
 
             <!-- Sağ Kolon: Yapılacaklar Listesi -->
@@ -69,7 +87,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         <i id="toastIcon" class="fas fa-check-circle"></i> <span id="toastText">Kaydedildi</span>
     </div>
     
-    <script src="script.js?v=5"></script>
+    <script src="script.js?v=6"></script>
 </body>
 </html>
 </body>
